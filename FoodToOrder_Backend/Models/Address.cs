@@ -18,5 +18,6 @@ namespace FoodToOrder_Backend.Models
         public string country { get; set; }
         public string pincode { get; set; }
         public User? User { get; set; }
+        public int user_id { get; set; }
     }
 }
