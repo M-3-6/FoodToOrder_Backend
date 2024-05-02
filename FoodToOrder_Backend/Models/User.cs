@@ -15,7 +15,10 @@ namespace FoodToOrder_Backend.Models
         public string email { get; set; }
         public string password { get; set; }
         public Address address { get; set; }
+        public Cart cart { get; set; }
         public DateTime date_of_birth { get; set; }
+
+        public ICollection<Order> orders { get; set; }
 
     }
 }

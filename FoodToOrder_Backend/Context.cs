@@ -21,16 +21,50 @@ namespace FoodToOrder_Backend
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            // user-address : one to one
             modelBuilder.Entity<User>()
                     .HasOne(u => u.address)
                     .WithOne(a => a.User)
                     .HasForeignKey<Address>(a => a.user_id);
 
-            modelBuilder.Entity<Dish>()
-                .HasOne<Restaurant>(d => d.Restaurant)
-                .WithMany(r => r.dishes)
-                .HasForeignKey(d => d.restaurant_id);
+            // user-cart : one to one
+            modelBuilder.Entity<User>()
+                    .HasOne(u => u.cart)
+                    .WithOne(c => c.User)
+                    .HasForeignKey<Cart>(c => c.user_id);
 
+            // address-restaurant : one to many
+            modelBuilder.Entity<Address>()
+                    .HasOne<Restaurant>(a => a.Restaurant)
+                    .WithMany(r => r.arrAddresses)
+                    .HasForeignKey(a => a.restaurant_id);
+
+            // restaurant-dishes : one to many
+            modelBuilder.Entity<Dish>()
+                    .HasOne<Restaurant>(d => d.Restaurant)
+                    .WithMany(r => r.dishes)
+                    .HasForeignKey(d => d.restaurant_id);
+
+            // user-order : one to many
+            modelBuilder.Entity<Order>()
+                    .HasOne<User>(o => o.User)
+                    .WithMany(u => u.orders)
+                    .HasForeignKey(o => o.user_id);
+
+            // order-dishes : many to many
+            modelBuilder.Entity<DishOrder>()
+                    .HasKey(od => new { od.DishId, od.OrderId});
+
+            modelBuilder.Entity<DishOrder>()
+                    .HasOne<Dish>(od => od.Dish)
+                    .WithMany(d => d.dishOrders)
+                    .HasForeignKey(od => od.DishId);
+
+            modelBuilder.Entity<DishOrder>()
+                    .HasOne<Order>(od => od.Order)
+                    .WithMany(d => d.dishOrders)
+                    .HasForeignKey(od => od.OrderId);
+            
             //cart-dish : many to many
             modelBuilder.Entity<CartDish>()
                 .HasKey(cd => new { cd.CartId, cd.DishId });
