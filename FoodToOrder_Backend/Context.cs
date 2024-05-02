@@ -34,7 +34,11 @@ namespace FoodToOrder_Backend
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Address> Addresses { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<DishOrder> DishOrders { get; set; }
+        public DbSet<CartDish> CartDishes { get; set; }
     }
 }
