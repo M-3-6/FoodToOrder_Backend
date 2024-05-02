@@ -12,47 +12,47 @@ namespace FoodToOrder_Backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly FoodToOrderAppContext _context;
 
-        public UserController(FoodToOrderAppContext context)
+        public OrdersController(FoodToOrderAppContext context)
         {
             _context = context;
         }
 
-        // GET: api/User
+        // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Orders.ToListAsync();
         }
 
-        // GET: api/User/5
+        // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<User>> GetUser(int id)
+        public async Task<ActionResult<Order>> GetOrder(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var order = await _context.Orders.FindAsync(id);
 
-            if (user == null)
+            if (order == null)
             {
                 return NotFound();
             }
 
-            return user;
+            return order;
         }
 
-        // PUT: api/User/5
+        // PUT: api/Orders/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(int id, User user)
+        public async Task<IActionResult> PutOrder(int id, Order order)
         {
-            if (id != user.id)
+            if (id != order.id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(user).State = EntityState.Modified;
+            _context.Entry(order).State = EntityState.Modified;
 
             try
             {
@@ -60,7 +60,7 @@ namespace FoodToOrder_Backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserExists(id))
+                if (!OrderExists(id))
                 {
                     return NotFound();
                 }
@@ -73,36 +73,36 @@ namespace FoodToOrder_Backend.Controllers
             return NoContent();
         }
 
-        // POST: api/User
+        // POST: api/Orders
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<User>> PostUser(User user)
+        public async Task<ActionResult<Order>> PostOrder(Order order)
         {
-            _context.Users.Add(user);
+            _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.id }, user);
+            return CreatedAtAction("GetOrder", new { id = order.id }, order);
         }
 
-        // DELETE: api/User/5
+        // DELETE: api/Orders/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteOrder(int id)
         {
-            var user = await _context.Users.FindAsync(id);
-            if (user == null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
             {
                 return NotFound();
             }
 
-            _context.Users.Remove(user);
+            _context.Orders.Remove(order);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool UserExists(int id)
+        private bool OrderExists(int id)
         {
-            return _context.Users.Any(e => e.id == id);
+            return _context.Orders.Any(e => e.id == id);
         }
     }
 }
