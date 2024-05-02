@@ -65,7 +65,7 @@ namespace FoodToOrder_Backend
                     .WithMany(d => d.dishOrders)
                     .HasForeignKey(od => od.OrderId);
             
-            //cart-dish : many to many
+            // cart-dish : many to many
             modelBuilder.Entity<CartDish>()
                 .HasKey(cd => new { cd.CartId, cd.DishId });
 

@@ -20,7 +20,7 @@ namespace FoodToOrder_Backend.Models
 
         public bool isAvailable { get; set; }
 
-        public string restaurant_id { get; set; }
+        public int restaurant_id { get; set; }
         public Restaurant? Restaurant { get; set; }
         public ICollection<DishOrder> dishOrders { get; set; }
 
