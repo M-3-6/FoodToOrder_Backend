@@ -1,5 +1,4 @@
 ﻿using FoodToOrder_Backend.Models;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore;
 
 namespace FoodToOrder_Backend.Repositories
@@ -26,6 +25,7 @@ namespace FoodToOrder_Backend.Repositories
 
         public IEnumerable<Order> GetOrders()
         {
+            IEnumerable<Order> ord = appDbContext.Orders.Include(o => o.dishOrders).ThenInclude(od => od.Dish).ToList();
             return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).ToList();
         }
 
