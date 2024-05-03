@@ -22,8 +22,8 @@ namespace FoodToOrder_Backend.Models
 
         public int restaurant_id { get; set; }
         public Restaurant? Restaurant { get; set; }
-        public ICollection<DishOrder> dishOrders { get; set; }
+        public ICollection<DishOrder>? dishOrders { get; set; }
 
-        public ICollection<CartDish> cartDishes { get; set; }
+        public ICollection<CartDish>? cartDishes { get; set; }
     }
 }

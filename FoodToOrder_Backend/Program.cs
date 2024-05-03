@@ -8,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+
 builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
@@ -21,6 +24,7 @@ builder.Services.AddDbContext<FoodToOrderAppContext>(opt =>
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    options.JsonSerializerOptions.MaxDepth = 0;
 });
 
 JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
