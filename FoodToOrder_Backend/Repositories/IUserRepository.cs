@@ -1,6 +1,14 @@
-﻿namespace FoodToOrder_Backend.Repositories
+﻿using FoodToOrder_Backend.Models;
+
+namespace FoodToOrder_Backend.Repositories
 {
     public interface IUserRepository
     {
+        IEnumerable<User> GetUsers();
+        User GetUserById(int UseId);
+        void InsertUser(User User);
+        void DeleteUser(int UserId);
+        void UpdateUser(User User);
+        void Save();
     }
 }
