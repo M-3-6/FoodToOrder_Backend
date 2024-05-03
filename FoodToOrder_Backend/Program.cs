@@ -6,20 +6,25 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddScoped<IAddressRepository, AddressRepository>();
-builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
-
-builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<IRestaurantService, RestaurantService>();
-
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddDbContext<FoodToOrderAppContext>(opt =>
 {
     Console.WriteLine("running service");
 });
+
+
+
+// Add services to the container.
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+
+builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+builder.Services.AddScoped<IRestaurantService, RestaurantService>();
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
+
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

@@ -15,25 +15,25 @@ namespace FoodToOrder_Backend.Controllers
     [ApiController]
     public class RestaurantsController : ControllerBase
     {
-        private readonly RestaurantService restService;
+        private readonly IRestaurantService restService;
 
-        public RestaurantsController(RestaurantService restService)
+        public RestaurantsController(IRestaurantService restService)
         {
             this.restService = restService;
         }
 
         // GET: api/Restaurants
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Restaurant>>> GetRestaurants()
+        public IEnumerable<Restaurant> GetRestaurants()
         {
-            return restService.GetRestaurants().ToList();
+            return  restService.GetRestaurants().ToList();
         }
 
-        // GET: api/Restaurants/5
+        //// GET: api/Restaurants/5
         [HttpGet("{id}")]
         public Restaurant GetRestaurant(int id)
         {
-           
+
             return restService.GetRestaurantById(id);
         }
 
@@ -47,7 +47,7 @@ namespace FoodToOrder_Backend.Controllers
                 return new Restaurant();
             }
 
-           return restService.UpdateRestaurant(restaurant);
+            return restService.UpdateRestaurant(restaurant);
 
         }
 

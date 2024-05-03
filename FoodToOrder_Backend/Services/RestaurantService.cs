@@ -6,34 +6,34 @@ namespace FoodToOrder_Backend.Services
     public class RestaurantService : IRestaurantService
     {
 
-        private readonly IRestaurantRepository restaurantRepo;
-       public RestaurantService(IRestaurantRepository restaurantRepository)
+        private readonly IRestaurantRepository _restaurantRepo;
+       public RestaurantService(IRestaurantRepository restaurantRepo)
         {
-            this.restaurantRepo = restaurantRepository;
+            _restaurantRepo = restaurantRepo;
         }
         
 
         public IEnumerable<Restaurant> GetRestaurants()
         {
-            return restaurantRepo.GetRestaurants();
+            return _restaurantRepo.GetRestaurants();
         }
         public Restaurant GetRestaurantById(int id)
         {
-            return restaurantRepo.GetRestaurantById(id);
+            return _restaurantRepo.GetRestaurantById(id);
         }
 
         public Restaurant InsertRestaurant(Restaurant restaurant)
         {
-            return restaurantRepo.InsertRestaurant(restaurant);
+            return _restaurantRepo.InsertRestaurant(restaurant);
         }
 
         public Restaurant UpdateRestaurant(Restaurant newRestaurant)
         {
-            return restaurantRepo.UpdateRestaurant(newRestaurant);
+            return _restaurantRepo.UpdateRestaurant(newRestaurant);
         }
         public Restaurant DeleteRestaurant(int id)
         {
-            return restaurantRepo.DeleteRestaurant(id);
+            return _restaurantRepo.DeleteRestaurant(id);
         }
     }
 }
