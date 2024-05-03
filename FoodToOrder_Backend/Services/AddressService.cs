@@ -21,26 +21,6 @@ namespace FoodToOrder_Backend.Services
         {
             return repo.GetAddressById(id);
         }
-
-        void IAddressService.InsertAddress(Address Address)
-        {
-            repo.InsertAddress(Address);
-        }
-
-        public void DeleteAddress(int id)
-        {
-            repo.DeleteAddress(id);
-
-        }
-
-        void IAddressService.UpdateAddress(Address address)
-        {
-            repo.UpdateAddress(address);
-        }
-
-        void IAddressService.Save()
-        {
-            Console.WriteLine("Saved");
-        }
+      
     }
 }

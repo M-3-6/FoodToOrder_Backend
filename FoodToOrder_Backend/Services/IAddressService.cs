@@ -6,9 +6,5 @@ namespace FoodToOrder_Backend.Services
     {
         IEnumerable<Address> GetAddresses();
         Address GetAddressById(int AddressId);
-        void InsertAddress(Address Address);
-        void DeleteAddress(int AddressId);
-        void UpdateAddress(Address Address);
-        void Save();
     }
 }

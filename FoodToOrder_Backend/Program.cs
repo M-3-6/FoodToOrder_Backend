@@ -13,6 +13,9 @@ builder.Services.AddScoped<IRestaurantRepository, RestaurantRepository>();
 builder.Services.AddScoped<IAddressService, AddressService>();
 builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
+
 builder.Services.AddDbContext<FoodToOrderAppContext>(opt =>
 {
     Console.WriteLine("running service");
