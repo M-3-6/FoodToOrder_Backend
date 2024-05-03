@@ -13,7 +13,7 @@ namespace FoodToOrder_Backend.Repositories
         }
         public void DeleteUser(int UserId)
         {
-            User user = appDbContext.Users.Where(u => u.id == UserId).FirstOrDefault();
+            User user = appDbContext.Users.Include(u => u.address).Where(u => u.id == UserId).FirstOrDefault();
             appDbContext.Remove(user);
             appDbContext.SaveChanges();
         }
