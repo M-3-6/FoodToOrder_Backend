@@ -42,11 +42,6 @@ namespace FoodToOrder_Backend.Controllers
         [HttpPut("{id}")]
         public Restaurant PutRestaurant(int id, Restaurant restaurant)
         {
-            if (id != restaurant.id)
-            {
-                return new Restaurant();
-            }
-
             return restService.UpdateRestaurant(restaurant);
 
         }
