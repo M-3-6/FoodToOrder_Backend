@@ -5,7 +5,7 @@ namespace FoodToOrder_Backend.Repositories
     public interface IUserRepository
     {
         IEnumerable<User> GetUsers();
-        User GetUserById(int UseId);
+        User GetUserById(int UserId);
         void InsertUser(User User);
         void DeleteUser(int UserId);
         void UpdateUser(User User);
