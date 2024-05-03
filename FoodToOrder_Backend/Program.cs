@@ -1,11 +1,39 @@
+using FoodToOrder_Backend;
+using FoodToOrder_Backend.Repositories;
+using FoodToOrder_Backend.Services;
+using Newtonsoft.Json;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+builder.Services.AddScoped<IAddressService, AddressService>();
 
-builder.Services.AddControllers();
+builder.Services.AddDbContext<FoodToOrderAppContext>(opt =>
+{
+    Console.WriteLine("running service");
+});
+
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
+{
+    PreserveReferencesHandling = PreserveReferencesHandling.None,
+    Formatting = Formatting.Indented
+};
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+{
+    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+}));
 
 var app = builder.Build();
 
@@ -21,5 +49,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("corsapp");
 
 app.Run();
