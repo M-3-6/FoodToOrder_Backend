@@ -18,7 +18,7 @@ namespace FoodToOrder_Backend.Models
         public Cart? cart { get; set; }
         public DateTime date_of_birth { get; set; }
 
-        public ICollection<Order> orders { get; set; }
+        public ICollection<Order>? orders { get; set; }
 
     }
 }

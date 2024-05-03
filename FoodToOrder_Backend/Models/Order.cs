@@ -15,7 +15,7 @@ namespace FoodToOrder_Backend.Models
         //public ICollection<Dish> arrDishes { get; set; }
         public User? User { get; set; }
         public int user_id { get; set; }
-        public ICollection<DishOrder> dishOrders { get; set; }
+        public ICollection<DishOrder>? dishOrders { get; set; }
         
 
     }

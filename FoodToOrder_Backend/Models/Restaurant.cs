@@ -16,8 +16,8 @@ namespace FoodToOrder_Backend.Models
 
         public int user_id { get; set; }
         public bool isOpen { get; set; }
-        public ICollection<Dish> dishes { get; set; }
+        public ICollection<Dish>? dishes { get; set; }
 
-        public ICollection<Address> arrAddresses { get; set; }
+        public ICollection<Address>? arrAddresses { get; set; }
     }
 }
