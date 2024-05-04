@@ -33,6 +33,10 @@ namespace FoodToOrder_Backend.Repositories
 
         public Cart UpdateCart(Cart cart)
         {
+            foreach(var dish in cart.cartDishes)
+            {
+                Console.WriteLine(dish.DishId);
+            }
             _Context.Carts.Update(cart);
             _Context.SaveChanges();
             return cart;

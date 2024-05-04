@@ -16,6 +16,6 @@ namespace FoodToOrder_Backend.Models
         public float Amount { get; set; }
         public ICollection<CartDish>? cartDishes { get; set; }
         public User? User { get; set; }
-        public int user_id { get; set; }
+        public int? user_id { get; set; }
     }
 }
