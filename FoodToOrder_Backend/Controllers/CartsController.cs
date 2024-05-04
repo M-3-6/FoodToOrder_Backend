@@ -31,9 +31,9 @@ namespace FoodToOrder_Backend.Controllers
 
         // GET: api/Carts/5
         [HttpGet("{id}")]
-        public Cart GetCart(int id)
+        public Cart GetCartByUserId(int id)
         {
-            return _cartService.GetCartById(id);
+            return _cartService.GetCartByUserId(id);
         }
 
         // PUT: api/Carts/5

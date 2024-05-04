@@ -6,7 +6,7 @@ namespace FoodToOrder_Backend.Repositories
     {
         IEnumerable<Cart> GetCarts();
 
-        Cart GetCartById(int id);
+        Cart GetCartByUserId(int id);
 
         Cart AddCart(Cart cart);
 

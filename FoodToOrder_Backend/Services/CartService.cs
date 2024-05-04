@@ -21,9 +21,9 @@ namespace FoodToOrder_Backend.Services
             return _cartRepo.DeleteCart(cartId);
         }
 
-        public Cart GetCartById(int id)
+        public Cart GetCartByUserId(int id)
         {
-            return _cartRepo.GetCartById(id);
+            return _cartRepo.GetCartByUserId(id);
         }
 
         public IEnumerable<Cart> GetCarts()

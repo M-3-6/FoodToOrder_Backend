@@ -18,9 +18,9 @@ namespace FoodToOrder_Backend.Repositories
             return _Context.Carts.Include(c=>c.cartDishes).ThenInclude(cd=>cd.Dish).ToList();
         }
 
-        public Cart GetCartById(int id)
+        public Cart GetCartByUserId(int id)
         {
-           return _Context.Carts.Include(c=>c.cartDishes).ThenInclude(cd => cd.Dish).Where(c=>c.id==id).First();
+           return _Context.Carts.Include(c=>c.cartDishes).ThenInclude(cd => cd.Dish).Where(c=>c.user_id==id).First();
         }
 
         public Cart AddCart(Cart cart)

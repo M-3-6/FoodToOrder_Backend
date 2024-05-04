@@ -24,11 +24,21 @@ builder.Services.AddScoped<IRestaurantService, RestaurantService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+<<<<<<< HEAD
 builder.Services.AddScoped<ICartRepository, CartRepository>();
 builder.Services.AddScoped<ICartService, CartService>();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IOrderService,OrderService>();
+=======
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderService,OrderService>();
+
+builder.Services.AddScoped<ICartRepository, CartRepository>();
+builder.Services.AddScoped<ICartService, CartService>();
+
+>>>>>>> 45b37ca3a1e84e56c2ccf4bd4601871df0bb00b6
 
 
 
@@ -36,6 +46,7 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
     options.JsonSerializerOptions.MaxDepth = 0;
+    options.JsonSerializerOptions.PropertyNamingPolicy = null; //it preserves the case
 });
 
 JsonSerializerSettings serializerSettings = new JsonSerializerSettings()
