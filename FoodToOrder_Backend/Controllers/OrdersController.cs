@@ -24,14 +24,14 @@ namespace FoodToOrder_Backend.Controllers
 
         // GET: api/Orders
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public IEnumerable<Order> GetOrders()
         {
             return orderService.GetOrders().ToList();
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
+        public Order GetOrder(int id)
         {
             return orderService.GetOrderById(id);
         }

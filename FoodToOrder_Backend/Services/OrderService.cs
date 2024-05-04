@@ -20,7 +20,6 @@ namespace FoodToOrder_Backend.Services
         {
             return orderRepository.GetOrderById(OrderId);
         }
-
         public void InsertOrder(Order Order)
         {
             orderRepository.InsertOrder(Order);
