@@ -20,7 +20,7 @@ namespace FoodToOrder_Backend.Repositories
 
         public Order GetOrderById(int OrderId)
         {
-            return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).Where(o=> o.id == OrderId).FirstOrDefault();
+            return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).ThenInclude(od=>od.Dish).Where(o=> o.id == OrderId).FirstOrDefault();
         }
 
         public IEnumerable<Order> GetOrders()
