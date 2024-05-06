@@ -1,5 +1,6 @@
 ﻿using FoodToOrder_Backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodToOrder_Backend.Repositories
 {
@@ -74,16 +75,16 @@ namespace FoodToOrder_Backend.Repositories
             //}
 
 
-            //var tempCart = _Context.Carts.Include(cd=>cd.cartDishes).Where(c=>c.id==cart.id).FirstOrDefault();
+            //var tempCart = _Context.Carts.Include(cd => cd.cartDishes).Where(c => c.id == cart.id).FirstOrDefault();
 
-            //_Context.Entry(tempCart).State = EntityState.Detached;
-            //_Context.Entry(tempCart).State = EntityState.Modified;
+            ////_Context.Entry(tempCart).State = EntityState.Detached;
+            ////_Context.Entry(tempCart).State = EntityState.Modified;
 
             //foreach (var cd in cart.cartDishes)
             //{
             //    if (!tempCart.cartDishes.Contains(cd))
             //    {
-            //        _Context.CartDishes.Add(cd);
+            //        tempCart.cartDishes.Add(cd);
             //    }
             //}
 
@@ -91,31 +92,64 @@ namespace FoodToOrder_Backend.Repositories
             //{
             //    if (cd.quantity == 0)
             //    {
-            //        _Context.CartDishes.Remove(cd);
+            //        tempCart.cartDishes.Remove(cd);
             //    }
             //}
 
-            // _Context.SaveChanges();
+            //_Context.SaveChanges();
 
 
 
-
+            //_Context.Entry(cart).State = EntityState.Detached;
+            //   _Context.Entry(cart).State = EntityState.Modified;
 
 
             // contextCart.cartDishes = tempDishes;
-           // _Context.CartDishes.UpdateRange(cart.cartDishes);
+            // _Context.CartDishes.UpdateRange(cart.cartDishes);
+            var tempCart = _Context.Carts.Include(cd => cd.cartDishes).Where(c => c.id == cart.id).FirstOrDefault();
+
+            foreach (var cdish in cart.cartDishes)
+            {
+                bool check = tempCart.cartDishes.Where(cd => (cd.DishId == cdish.DishId)).IsNullOrEmpty();
+                if (check)
+                {
+                    _Context.CartDishes.Add(cdish);
+                }
+            }
+            _Context.SaveChanges();
+
+           _Context.Entry(cart).State = EntityState.Detached;
+            _Context.Entry(tempCart).State = EntityState.Detached;
+         //   _Context.Entry(cart).State = EntityState.Unchanged;
+         //   _Context.Entry(tempCart).State = EntityState.Unchanged;
+
+            foreach (var cdish in tempCart.cartDishes)
+            {
+                bool check = cart.cartDishes.Where(cd => (cd.DishId == cdish.DishId)).IsNullOrEmpty();
+                if (check)
+                {
+                    _Context.CartDishes.Remove(cdish);
+                }
+            }
+            _Context.SaveChanges();
+
+            _Context.Entry(cart).State = EntityState.Detached;
+           _Context.Entry(tempCart).State = EntityState.Detached;
+        //    _Context.Entry(cart).State = EntityState.Unchanged;
+       //    _Context.Entry(tempCart).State = EntityState.Unchanged;
+
             _Context.Carts.Update(cart);
 
             //  _Context.CartDishes.UpdateRange(cart.cartDishes);
             _Context.SaveChanges();
 
-            
+
 
             //_Context.CartDishes.Update(cart.cartDishes);
 
-            
 
-          // _Context.Entry(cart.cartDishes).State = EntityState.Detached;
+
+            // _Context.Entry(cart.cartDishes).State = EntityState.Detached;
 
             return cart;
         }
