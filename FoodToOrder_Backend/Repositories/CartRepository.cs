@@ -61,25 +61,61 @@ namespace FoodToOrder_Backend.Repositories
 
         public Cart UpdateCart(Cart cart)
         {
-          //  CartDish[] tempDishes = cart.cartDishes.ToArray();
-         //   var contextCart = _Context.Carts.Where(cd => cd.id == cart.id).First();
-           
-           
+            //  CartDish[] tempDishes = cart.cartDishes.ToArray();
+            //   var contextCart = _Context.Carts.Where(cd => cd.id == cart.id).First();
+
+            //var tempDishes = new List<CartDish>();
+
+            //var tempCart = _Context.Carts.Where(c=>c.id==cart.id).FirstOrDefault();
+
+            //foreach(var cd in tempCart.cartDishes)
+            //{
+            //    tempDishes.Add(cd);
+            //}
 
 
-           // contextCart.cartDishes = tempDishes;
+            //var tempCart = _Context.Carts.Include(cd=>cd.cartDishes).Where(c=>c.id==cart.id).FirstOrDefault();
 
+            //_Context.Entry(tempCart).State = EntityState.Detached;
+            //_Context.Entry(tempCart).State = EntityState.Modified;
+
+            //foreach (var cd in cart.cartDishes)
+            //{
+            //    if (!tempCart.cartDishes.Contains(cd))
+            //    {
+            //        _Context.CartDishes.Add(cd);
+            //    }
+            //}
+
+            //foreach (var cd in cart.cartDishes)
+            //{
+            //    if (cd.quantity == 0)
+            //    {
+            //        _Context.CartDishes.Remove(cd);
+            //    }
+            //}
+
+            // _Context.SaveChanges();
+
+
+
+
+
+
+            // contextCart.cartDishes = tempDishes;
+           // _Context.CartDishes.UpdateRange(cart.cartDishes);
             _Context.Carts.Update(cart);
 
-            _Context.CartDishes.UpdateRange(cart.cartDishes);
+            //  _Context.CartDishes.UpdateRange(cart.cartDishes);
+            _Context.SaveChanges();
 
-         //   _Context.Entry(cart).State = EntityState.Modified;
+            
 
             //_Context.CartDishes.Update(cart.cartDishes);
 
-            _Context.SaveChanges();
+            
 
-            _Context.Entry(cart).State = EntityState.Detached;
+          // _Context.Entry(cart.cartDishes).State = EntityState.Detached;
 
             return cart;
         }
