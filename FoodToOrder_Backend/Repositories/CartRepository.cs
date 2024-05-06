@@ -31,14 +31,56 @@ namespace FoodToOrder_Backend.Repositories
         }
 
 
+        //public Cart UpdateCart(Cart cart)
+        //{
+        //    CartDish[] tempDishes = cart.cartDishes.ToArray();
+        //    var contextCart = _Context.Carts.Where(cd => cd.id == cart.id).First();
+        //    _Context.Entry(contextCart).State = EntityState.Detached;
+        //    _Context.Entry(contextCart).State = EntityState.Modified;
+
+
+
+        //    contextCart.cartDishes = tempDishes;           
+
+        //    //for below error
+        //    //System.InvalidOperationException: 'The instance of entity type 'CartDish' cannot be tracked because another instance with the same key value for {'CartId', 'DishId'}
+        //    //is already being tracked. When attaching existing entities, ensure that only one entity instance with a given key value is attached.
+        //    //Consider using 'DbContextOptionsBuilder.EnableSensitiveDataLogging' to see the conflicting key values.'
+
+
+
+        //    _Context.Carts.Update(contextCart);
+
+        //    //_Context.CartDishes.Update(cart.cartDishes);
+
+        //    _Context.SaveChanges();
+
+
+        //    return cart;
+        //}
+
         public Cart UpdateCart(Cart cart)
         {
-            foreach(var dish in cart.cartDishes)
-            {
-                Console.WriteLine(dish.DishId);
-            }
+          //  CartDish[] tempDishes = cart.cartDishes.ToArray();
+         //   var contextCart = _Context.Carts.Where(cd => cd.id == cart.id).First();
+           
+           
+
+
+           // contextCart.cartDishes = tempDishes;
+
             _Context.Carts.Update(cart);
+
+            _Context.CartDishes.UpdateRange(cart.cartDishes);
+
+         //   _Context.Entry(cart).State = EntityState.Modified;
+
+            //_Context.CartDishes.Update(cart.cartDishes);
+
             _Context.SaveChanges();
+
+            _Context.Entry(cart).State = EntityState.Detached;
+
             return cart;
         }
 
