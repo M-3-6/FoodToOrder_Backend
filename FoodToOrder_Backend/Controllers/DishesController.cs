@@ -30,19 +30,17 @@ namespace FoodToOrder_Backend.Controllers
             return service.GetDishes();
         }
 
-        //// GET: api/Dishes/5
-        //[HttpGet("{id}")]
-        //public async Task<ActionResult<Dish>> GetDish(int id)
-        //{
-        //    var dish = await _context.Dishes.FindAsync(id);
-
-        //    if (dish == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return dish;
-        //}
+        // GET: api/Dishes/5
+        [HttpGet("{id}")]
+        public IEnumerable<Dish> GetDishesByRestaurantId(int id)
+        {
+            return service.GetDishesByRestaurantId(id);
+        }
+        [HttpGet("GetDishById/{id}")]
+        public Dish GetDishById(int id)
+        {
+            return service.GetDishById(id);
+        }
 
         // PUT: api/Dishes/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754

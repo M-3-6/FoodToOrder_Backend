@@ -15,9 +15,19 @@ namespace FoodToOrder_Backend.Repositories
             appDbContext.SaveChanges();
         }
 
+        Dish IDishRepository.GetDishById(int id)
+        {
+            return appDbContext.Dishes.Where(d => d.id == id).FirstOrDefault();
+        }
+
         List<Dish> IDishRepository.GetDishes()
         {
             return appDbContext.Dishes.ToList();
+        }
+
+        List<Dish> IDishRepository.GetDishesByRestaurantId(int id)
+        {
+            return appDbContext.Dishes.Where(d => d.restaurant_id == id).ToList();
         }
     }
 }
