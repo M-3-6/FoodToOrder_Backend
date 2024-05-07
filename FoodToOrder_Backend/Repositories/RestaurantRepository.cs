@@ -43,13 +43,21 @@ namespace FoodToOrder_Backend.Repositories
 
             _context.Entry(newRestaurant).State = EntityState.Detached;
 
-            var tempRest = _context.Restaurants.Include(r=>r.arrAddresses).Where(r => r.id == newRestaurant.id).FirstOrDefault();
+            var tempRest = _context.Restaurants.Include(r=>r.arrAddresses).Include(r=>r.dishes).Where(r => r.id == newRestaurant.id).FirstOrDefault();
             foreach (var add in tempRest.arrAddresses)
             {
                 bool check = newRestaurant.arrAddresses.Where(ad => (ad.id == add.id)).IsNullOrEmpty();
                 if (check)
                 {
                     _context.Addresses.Remove(add);
+                }
+            }
+            foreach (var dish in tempRest.dishes)
+            {
+                bool check = newRestaurant.dishes.Where(tempDish => (tempDish.id == dish.id)).IsNullOrEmpty();
+                if (check)
+                {
+                    _context.Dishes.Remove(dish);
                 }
             }
             _context.SaveChanges();
