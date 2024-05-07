@@ -16,9 +16,19 @@ namespace FoodToOrder_Backend.Services
             return repo.GetDishes();
         }
 
+        public List<Dish> GetDishesByRestaurantId(int id)
+        {
+            return repo.GetDishesByRestaurantId(id);
+        }
+
         public void UpdateDish(Dish Dish)
         {
             repo.UpdateDish(Dish);
+        }
+
+        Dish IDishService.GetDishById(int id)
+        {
+            return repo.GetDishById(id);
         }
     }
 }
