@@ -32,12 +32,9 @@ namespace FoodToOrder_Backend.Repositories
 
         public void InsertOrder(Order Order)
         {
-            appDbContext.Database.OpenConnection();
-            appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Orders ON");
             appDbContext.Orders.Add(Order);
             appDbContext.SaveChanges();
-            appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Orders OFF");
-            appDbContext.Database.CloseConnection();
+            
         }
 
         public void Save()
