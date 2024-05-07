@@ -69,14 +69,21 @@ namespace FoodToOrder_Backend.Repositories
             foreach (var odish in tempOrder.dishOrders)
             {
                 bool check = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
-                bool empty = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).FirstOrDefault().Dish == null;
-                if (check || empty)
+                
+                if (check)
                 {
                     appDbContext.DishOrders.Remove(odish);
    
                 }
             }
             appDbContext.SaveChanges();
+
+            bool empty = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault().Dish == null;
+            if (empty)
+            {
+                var odish = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault();
+                appDbContext.DishOrders.Remove(odish);
+            }
 
             appDbContext.Entry(Order).State = EntityState.Detached;
             appDbContext.Entry(tempOrder).State = EntityState.Detached;
