@@ -1,5 +1,6 @@
 ﻿using FoodToOrder_Backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace FoodToOrder_Backend.Repositories
 {
@@ -50,7 +51,36 @@ namespace FoodToOrder_Backend.Repositories
 
         public void UpdateOrder(Order Order)
         {
-            // appDbContext.Entry(Order).State = EntityState.Detached;
+            var tempOrder = appDbContext.Orders.Include(od => od.dishOrders).Where(o => o.id == Order.id).FirstOrDefault();
+
+            foreach (var odish in Order.dishOrders)
+            {
+                bool check = tempOrder.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
+                if (check)
+                {
+                    appDbContext.DishOrders.Add(odish);
+                }
+            }
+            appDbContext.SaveChanges();
+
+            appDbContext.Entry(Order).State = EntityState.Detached;
+            appDbContext.Entry(tempOrder).State = EntityState.Detached;
+            
+            foreach (var odish in tempOrder.dishOrders)
+            {
+                bool check = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
+                bool empty = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).FirstOrDefault().Dish == null;
+                if (check || empty)
+                {
+                    appDbContext.DishOrders.Remove(odish);
+   
+                }
+            }
+            appDbContext.SaveChanges();
+
+            appDbContext.Entry(Order).State = EntityState.Detached;
+            appDbContext.Entry(tempOrder).State = EntityState.Detached;
+            
             appDbContext.Orders.Update(Order);
             appDbContext.SaveChanges();
         }
