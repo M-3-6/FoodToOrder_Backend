@@ -50,6 +50,7 @@ namespace FoodToOrder_Backend.Repositories
 
         public void UpdateOrder(Order Order)
         {
+            // appDbContext.Entry(Order).State = EntityState.Detached;
             appDbContext.Orders.Update(Order);
             appDbContext.SaveChanges();
         }
