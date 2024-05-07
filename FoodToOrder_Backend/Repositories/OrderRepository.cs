@@ -14,14 +14,30 @@ namespace FoodToOrder_Backend.Repositories
         }
         public void DeleteOrder(int OrderId)
         {
-            Order order = appDbContext.Orders.Include(o => o.dishOrders).Where(o => o.id == OrderId).FirstOrDefault();
-            appDbContext.Orders.Remove(order);
-            appDbContext.SaveChanges();
+            try
+            {
+                Order order = appDbContext.Orders.Include(o => o.dishOrders).Where(o => o.id == OrderId).FirstOrDefault();
+                appDbContext.Orders.Remove(order);
+                appDbContext.SaveChanges();
+
+            } catch (Exception ex)
+            {
+                Console.WriteLine("Unable to delete order", ex);
+            }
+            
         }
 
         public Order GetOrderById(int OrderId)
         {
-            return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).ThenInclude(od=>od.Dish).Where(o=> o.id == OrderId).FirstOrDefault();
+            try
+            {
+                return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).ThenInclude(od => od.Dish).Where(o => o.id == OrderId).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to get order", ex);
+                return null;
+            }
         }
 
         public IEnumerable<Order> GetOrders()
@@ -32,9 +48,16 @@ namespace FoodToOrder_Backend.Repositories
 
         public void InsertOrder(Order Order)
         {
-            appDbContext.Orders.Add(Order);
-            appDbContext.SaveChanges();
-            
+            try
+            {
+                appDbContext.Orders.Add(Order);
+                appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to insert order", ex);
+            }
+
         }
 
         public void Save()
@@ -48,45 +71,51 @@ namespace FoodToOrder_Backend.Repositories
 
         public void UpdateOrder(Order Order)
         {
-            var tempOrder = appDbContext.Orders.Include(od => od.dishOrders).Where(o => o.id == Order.id).FirstOrDefault();
+            try {
+                var tempOrder = appDbContext.Orders.Include(od => od.dishOrders).Where(o => o.id == Order.id).FirstOrDefault();
 
-            foreach (var odish in Order.dishOrders)
-            {
-                bool check = tempOrder.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
-                if (check)
+                foreach (var odish in Order.dishOrders)
                 {
-                    appDbContext.DishOrders.Add(odish);
+                    bool check = tempOrder.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
+                    if (check)
+                    {
+                        appDbContext.DishOrders.Add(odish);
+                    }
                 }
-            }
-            appDbContext.SaveChanges();
+                appDbContext.SaveChanges();
 
-            appDbContext.Entry(Order).State = EntityState.Detached;
-            appDbContext.Entry(tempOrder).State = EntityState.Detached;
-            
-            foreach (var odish in tempOrder.dishOrders)
-            {
-                bool check = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
-                
-                if (check)
+                appDbContext.Entry(Order).State = EntityState.Detached;
+                appDbContext.Entry(tempOrder).State = EntityState.Detached;
+
+                foreach (var odish in tempOrder.dishOrders)
                 {
+                    bool check = Order.dishOrders.Where(od => (od.DishId == odish.DishId)).IsNullOrEmpty();
+
+                    if (check)
+                    {
+                        appDbContext.DishOrders.Remove(odish);
+
+                    }
+                }
+                appDbContext.SaveChanges();
+
+                bool empty = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault().Dish == null;
+                if (empty)
+                {
+                    var odish = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault();
                     appDbContext.DishOrders.Remove(odish);
-   
                 }
-            }
-            appDbContext.SaveChanges();
 
-            bool empty = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault().Dish == null;
-            if (empty)
+                appDbContext.Entry(Order).State = EntityState.Detached;
+                appDbContext.Entry(tempOrder).State = EntityState.Detached;
+
+                appDbContext.Orders.Update(Order);
+                appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
             {
-                var odish = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault();
-                appDbContext.DishOrders.Remove(odish);
+                Console.WriteLine("Unable to update order", ex);
             }
-
-            appDbContext.Entry(Order).State = EntityState.Detached;
-            appDbContext.Entry(tempOrder).State = EntityState.Detached;
-            
-            appDbContext.Orders.Update(Order);
-            appDbContext.SaveChanges();
         }
     }
 }

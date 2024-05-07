@@ -13,9 +13,16 @@ namespace FoodToOrder_Backend.Repositories
         }
         public void DeleteUser(int UserId)
         {
-            User user = appDbContext.Users.Include(u => u.address).Include(u => u.cart).Include(u => u.orders).Where(u => u.id == UserId).FirstOrDefault();
-            appDbContext.Remove(user);
-            appDbContext.SaveChanges();
+            try
+            {
+                User user = appDbContext.Users.Include(u => u.address).Include(u => u.cart).Include(u => u.orders).Where(u => u.id == UserId).FirstOrDefault();
+                appDbContext.Remove(user);
+                appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to delete user", ex);
+            }
         }
 
         public User GetUserById(int UserId)
@@ -30,13 +37,20 @@ namespace FoodToOrder_Backend.Repositories
 
         public void InsertUser(User User)
         {
-            appDbContext.Database.OpenConnection();
-            appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
-            User.orders = [];
-            appDbContext.Users.Add(User);
-            appDbContext.SaveChanges();
-            appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
-            appDbContext.Database.CloseConnection();
+            try
+            {
+                appDbContext.Database.OpenConnection();
+                appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
+                User.orders = [];
+                appDbContext.Users.Add(User);
+                appDbContext.SaveChanges();
+                appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
+                appDbContext.Database.CloseConnection();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to insert user", ex);
+            }
         }
 
         public void Save()
@@ -50,9 +64,16 @@ namespace FoodToOrder_Backend.Repositories
 
         public void UpdateUser(User User)
         {
-            if (User.orders is null) User.orders = [];
-            appDbContext.Users.Update(User);
-            appDbContext.SaveChanges();
+            try
+            {
+                if (User.orders is null) User.orders = [];
+                appDbContext.Users.Update(User);
+                appDbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Unable to update user", ex);
+            }
         }
     }
 }
