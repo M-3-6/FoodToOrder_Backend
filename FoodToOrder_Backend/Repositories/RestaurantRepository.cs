@@ -36,13 +36,14 @@ namespace FoodToOrder_Backend.Repositories
 
         public Restaurant UpdateRestaurant(Restaurant newRestaurant)
         {
+           // var tempRest = _context.Restaurants.Where(r => r.id == newRestaurant.id).FirstOrDefault();
             _context.Restaurants.Update(newRestaurant);
             _context.SaveChanges();
             return newRestaurant;
         }
         public Restaurant DeleteRestaurant(int id)
         {
-            Restaurant restToBeDel = _context.Restaurants.Include(r=>r.arrAddresses).Where(r=> r.id == id).FirstOrDefault();
+            var restToBeDel = _context.Restaurants.Include(r=>r.arrAddresses).Where(r=> r.id == id).FirstOrDefault();
             _context.Remove(restToBeDel);
             _context.SaveChanges();
             return restToBeDel;
