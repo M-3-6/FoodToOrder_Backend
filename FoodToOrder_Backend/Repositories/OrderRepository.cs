@@ -99,12 +99,12 @@ namespace FoodToOrder_Backend.Repositories
                 }
                 appDbContext.SaveChanges();
 
-                bool empty = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault().Dish == null;
-                if (empty)
-                {
-                    var odish = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault();
-                    appDbContext.DishOrders.Remove(odish);
-                }
+                //bool empty = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault().Dish == null;
+                //if (empty)
+                //{
+                //    var odish = Order.dishOrders.Where(od => (od.DishId == Order.dishOrders?.ElementAt(0).DishId)).FirstOrDefault();
+                //    appDbContext.DishOrders.Remove(odish);
+                //}
 
                 appDbContext.Entry(Order).State = EntityState.Detached;
                 appDbContext.Entry(tempOrder).State = EntityState.Detached;
