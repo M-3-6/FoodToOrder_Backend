@@ -138,7 +138,7 @@ namespace FoodToOrder_Backend.Repositories
            _Context.Entry(tempCart).State = EntityState.Detached;
         //    _Context.Entry(cart).State = EntityState.Unchanged;
        //    _Context.Entry(tempCart).State = EntityState.Unchanged;
-
+        
             _Context.Carts.Update(cart);
 
             //  _Context.CartDishes.UpdateRange(cart.cartDishes);

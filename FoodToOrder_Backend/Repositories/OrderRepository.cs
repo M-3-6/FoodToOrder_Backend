@@ -31,6 +31,7 @@ namespace FoodToOrder_Backend.Repositories
         {
             try
             {
+                
                 return appDbContext.Orders.Include(o => o.User).Include(o => o.dishOrders).ThenInclude(od => od.Dish).Where(o => o.id == OrderId).FirstOrDefault();
             }
             catch (Exception ex)
@@ -50,8 +51,11 @@ namespace FoodToOrder_Backend.Repositories
         {
             try
             {
-                appDbContext.Orders.Add(Order);
+                appDbContext.Entry(Order).State = EntityState.Detached;
+                appDbContext.Entry(Order).State = EntityState.Unchanged;
+                appDbContext.Orders.Add(Order);                
                 appDbContext.SaveChanges();
+                
             }
             catch (Exception ex)
             {
