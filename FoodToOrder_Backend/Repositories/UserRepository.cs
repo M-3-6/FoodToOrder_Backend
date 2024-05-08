@@ -39,13 +39,14 @@ namespace FoodToOrder_Backend.Repositories
         {
             try
             {
-                appDbContext.Database.OpenConnection();
-                appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
-                User.orders = [];
+               // appDbContext.Database.OpenConnection();
+               // appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users ON");
+             //   User.orders = [];
+                User.cart=new Cart() { Amount=0,user_id=0,id=0};
                 appDbContext.Users.Add(User);
                 appDbContext.SaveChanges();
-                appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
-                appDbContext.Database.CloseConnection();
+             //   appDbContext.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.Users OFF");
+             //   appDbContext.Database.CloseConnection();
             }
             catch (Exception ex)
             {
