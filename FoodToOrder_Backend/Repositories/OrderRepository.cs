@@ -51,8 +51,6 @@ namespace FoodToOrder_Backend.Repositories
         {
             try
             {
-                appDbContext.Entry(Order).State = EntityState.Detached;
-                appDbContext.Entry(Order).State = EntityState.Unchanged;
                 appDbContext.Orders.Add(Order);                
                 appDbContext.SaveChanges();
                 
